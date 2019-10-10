@@ -1,0 +1,4 @@
+nfl
+cfb
+nba
+soccer

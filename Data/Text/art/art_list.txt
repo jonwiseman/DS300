@@ -1,0 +1,5 @@
+art
+painting
+drawing
+photography
+pixelart
