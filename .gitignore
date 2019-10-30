@@ -7,3 +7,5 @@ Images/
 .ipynb_checkpoints/
 
 .idea/
+
+configuration.conf
