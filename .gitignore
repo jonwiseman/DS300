@@ -2,4 +2,5 @@ env/
 Jupyter/
 Images/
 .ipynb_checkpoints/
-"configuration.conf" 
+configuration.conf
+*.conf
