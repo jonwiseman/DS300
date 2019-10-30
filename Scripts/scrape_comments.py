@@ -15,7 +15,7 @@ def main():
     args = parser.parse_args()
 
     cat = args.c
-    config.read('configuration.conf')
+    config.read(r'C:\Users\jonat\Desktop\Data Mining\Project\configuration.conf')
     os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\Text\{cat}')
 
     subreddits = []
@@ -31,7 +31,7 @@ def main():
                          username=config['Reddit']['username'])
 
     for sub_name in subreddits:
-        logging.info(f'Scraping comments for r/{sub}')
+        logging.info(f'Scraping comments for r/{sub_name}')
         sub = reddit.subreddit(sub_name)
         submissions = sub.top(limit=10)
 
@@ -50,7 +50,7 @@ def main():
                                          'comment': second_level_comment.body})
                     count += 1
 
-        logging.info(f'{len(comments)} scraped from r/{sub}\n')
+        logging.info(f'{len(comments)} scraped from r/{sub_name}\n')
         with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\Text\{cat}\Raw\{sub}.json', 'w') as f:
             json.dump(comments, f)
 
