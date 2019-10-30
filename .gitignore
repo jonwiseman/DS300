@@ -2,5 +2,6 @@ env/
 Jupyter/
 Images/
 .ipynb_checkpoints/
+.idea/
 configuration.conf
 *.conf
