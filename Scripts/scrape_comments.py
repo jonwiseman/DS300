@@ -1,15 +1,21 @@
 import argparse
+import configparser
+import logging
 import praw
 import os
 import json
 
 
 def main():
+    logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
     parser = argparse.ArgumentParser()
+    config = configparser.ConfigParser()
+
     parser.add_argument('c', metavar='CATEGORY', type=str, help='category')
     args = parser.parse_args()
 
     cat = args.c
+    config.read('configuration.conf')
     os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\Text\{cat}')
 
     subreddits = []
@@ -18,13 +24,14 @@ def main():
         for line in f:
             subreddits.append(line.replace('\n', ''))
 
-    reddit = praw.Reddit(client_id='eQt4_moPBnQ8xg',
-                         client_secret='t8WuNRzCPPBUkBJbyV10MO3nWr0',
-                         password='AnimeTiddies5',
-                         user_agent='Windows:com.example.myredditapp:v1.0.0 (by /u/dig_bick69_420)',
-                         username='dig_bick69_420')
+    reddit = praw.Reddit(client_id=config['Reddit']['client_id'],
+                         client_secret=config['Reddit']['client_secret'],
+                         password=config['Reddit']['password'],
+                         user_agent=config['Reddit']['user_agent'],
+                         username=config['Reddit']['username'])
 
     for sub_name in subreddits:
+        logging.info(f'Scraping comments for r/{sub}')
         sub = reddit.subreddit(sub_name)
         submissions = sub.top(limit=10)
 
@@ -43,8 +50,10 @@ def main():
                                          'comment': second_level_comment.body})
                     count += 1
 
+        logging.info(f'{len(comments)} scraped from r/{sub}\n')
         with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\Text\{cat}\Raw\{sub}.json', 'w') as f:
             json.dump(comments, f)
+
 
 if __name__ == '__main__':
     main()
