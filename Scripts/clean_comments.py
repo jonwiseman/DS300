@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 import re
 import json
@@ -10,6 +11,7 @@ from nltk.corpus import wordnet
 
 
 def main():
+    logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
     parser = argparse.ArgumentParser()
     parser.add_argument('c', metavar='CATEGORY', type=str, help='category')
     args = parser.parse_args()
@@ -27,6 +29,7 @@ def main():
     lemmatizer = WordNetLemmatizer()
 
     for sub in subreddits:
+        logging.info(f'Cleaning comments for r/{sub}')
         with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\Text\{cat}\Raw\{sub}.json', 'r') as f:
             comments = json.load(f)
 

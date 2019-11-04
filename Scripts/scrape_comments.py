@@ -33,22 +33,13 @@ def main():
     for sub_name in subreddits:
         logging.info(f'Scraping comments for r/{sub_name}')
         sub = reddit.subreddit(sub_name)
-        submissions = sub.top(limit=10)
-
         comments = []
-        for submission in submissions:
-            submission.comments.replace_more(limit=10)
-            count = 0
+        for submission in sub.top(limit=100):
             for top_level_comment in submission.comments:
-                if count < 50:
+                if type(top_level_comment) is praw.models.reddit.comment.Comment:
                     comments.append({'comment_id': top_level_comment.id,
                                      'post_id': top_level_comment.submission.id,
                                      'comment': top_level_comment.body})
-                    for second_level_comment in top_level_comment.replies:
-                        comments.append({'comment_id': second_level_comment.id,
-                                         'post_id': second_level_comment.submission.id,
-                                         'comment': second_level_comment.body})
-                    count += 1
 
         logging.info(f'{len(comments)} scraped from r/{sub_name}\n')
         with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\Text\{cat}\Raw\{sub}.json', 'w') as f:
