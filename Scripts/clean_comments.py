@@ -15,55 +15,62 @@ from nltk.stem import LancasterStemmer
 def main():
     logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
     parser = argparse.ArgumentParser()
-    parser.add_argument('c', metavar='CATEGORY', type=str, help='category')
-    parser.add_argument('s', metavar='STEM_TYPE', type=str,
-                        choices=['lemma', 'porter', 'lancaster'], help='stemming type', )
+    parser.add_argument('-c', metavar='CATEGORY', required=True, type=str, nargs='+', help='category')
+    parser.add_argument('-s', metavar='STEM_TYPE', required=True, type=str,
+                        nargs='+', help='stemming type', )
     args = parser.parse_args()
 
-    cat = args.c
-    stem = args.s
-    os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}')
+    categories = args.c
+    stems = args.s
+    n_stems = int('lancaster' in stems) + int('lemma' in stems) + int('porter' in stems)
+    if n_stems == 0:
+        logging.error('Invalid stem choice')
+        return
 
-    subreddits = []
+    for cat in categories:
+        os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}')
 
-    with open(f'{cat}_list.txt', 'r') as f:
-        for line in f:
-            subreddits.append(line.replace('\n', ''))
+        subreddits = []
 
-    stop_words = set(stopwords.words('english'))
-    lemmatizer = WordNetLemmatizer()
-    porter = PorterStemmer()
-    lancaster = LancasterStemmer()
+        with open(f'{cat}_list.txt', 'r') as f:
+            for line in f:
+                subreddits.append(line.replace('\n', ''))
 
-    for sub in subreddits:
-        logging.info(f'Cleaning comments for r/{sub}')
-        with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Raw\{sub}.json', 'r') as f:
-            comments = json.load(f)
+        stop_words = set(stopwords.words('english'))
+        lemmatizer = WordNetLemmatizer()
+        porter = PorterStemmer()
+        lancaster = LancasterStemmer()
+        for stem in stems:
+            for sub in subreddits:
+                logging.info(f'Cleaning comments for r/{sub} using {stem} stemming')
+                with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Raw\{sub}.json', 'r') as f:
+                    comments = json.load(f)
 
-        filtered_comments = []
-        for comment in comments:
-            sent = comment['comment']
-            sent = keep_alphabetical(sent)
+                filtered_comments = []
+                for comment in comments:
+                    sent = comment['comment']
+                    sent = keep_alphabetical(sent)
 
-            word_tokens = word_tokenize(sent)
-            filtered_sentence = [w for w in word_tokens if w not in stop_words]
-            sent = ' '.join(filtered_sentence)
+                    word_tokens = word_tokenize(sent)
+                    filtered_sentence = [w for w in word_tokens if w not in stop_words]
+                    sent = ' '.join(filtered_sentence)
 
-            word_tokens = word_tokenize(sent)
-            tokens = nltk.pos_tag(word_tokens)
-            if stem == 'lemma':
-                final_words = remove_stubs(' '.join([lemmatizer.lemmatize(pair[0], get_wordnet_pos(pair[1]))
-                                                     for pair in tokens]))
-            elif stem == 'porter':
-                final_words = remove_stubs(' '.join([porter.stem(word) for word in word_tokens]))
-            else:
-                final_words = remove_stubs(' '.join([lancaster.stem(word) for word in word_tokens]))
+                    word_tokens = word_tokenize(sent)
+                    tokens = nltk.pos_tag(word_tokens)
+                    if stem == 'lemma':
+                        final_words = remove_stubs(' '.join([lemmatizer.lemmatize(pair[0], get_wordnet_pos(pair[1]))
+                                                             for pair in tokens]))
+                    elif stem == 'porter':
+                        final_words = remove_stubs(' '.join([porter.stem(word) for word in word_tokens]))
+                    else:
+                        final_words = remove_stubs(' '.join([lancaster.stem(word) for word in word_tokens]))
 
-            filtered_comments.append(
-                {'comment_id': comment['comment_id'], 'post_id': comment['post_id'], 'comment': final_words})
+                    filtered_comments.append(
+                        {'comment_id': comment['comment_id'], 'post_id': comment['post_id'], 'comment': final_words})
 
-        with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Processed\{stem}\{sub}.json', 'w') as f:
-            json.dump(filtered_comments, f)
+                with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Processed\{stem}\{sub}.json', 'w') \
+                        as f:
+                    json.dump(filtered_comments, f)
 
 
 def keep_alphabetical(text):
