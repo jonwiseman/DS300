@@ -22,6 +22,10 @@ def main():
 
     categories = args.c
     stems = args.s
+
+    if 'all' in stems:
+        stems = ['lancaster', 'lemma', 'porter']
+
     n_stems = int('lancaster' in stems) + int('lemma' in stems) + int('porter' in stems)
     if n_stems == 0:
         logging.error('Invalid stem choice')
