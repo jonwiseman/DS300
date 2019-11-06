@@ -17,7 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', metavar='CATEGORY', required=True, type=str, nargs='+', help='category')
     parser.add_argument('-s', metavar='STEM_TYPE', required=True, type=str,
-                        nargs='+', help='stemming type', )
+                        nargs='+', help='stemming type')
     args = parser.parse_args()
 
     categories = args.c
