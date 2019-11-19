@@ -7,7 +7,9 @@ This project aims to utilize clustering techniques on Reddit comment data to pro
 Reddit comments from posts from 37 subreddits spanning 8 "categories" that were assigned by hand to establish ground-truth for clustering.
 Comment data was scraped for 37 subreddits spanning 8 hand-labeled categories (art, gaming, music, politics_news, reading, science, sports, and tech).  The top first- and second-level comments for the top 30 all-time posts from each subreddit were collected.  Text preprocessing in the form of removing non-alphabetic characters and URLs, stop word removal, and lemmatization/stemming were performed to clean the text dataset.  Comment data is stored in .json format, with the raw and processed text data available for each scraped subreddit in the "Data" folder.
 
-Clustering models (including K-Means, Agglomerative Hierarchical, DBSCAN, OPTICS, Affinity Propagation, and Spectral Clustering) are then applied on both TF-IDF vectorized documents reducing using SVD and document embeddings producing using gensim's implementation of the Doc2Vec algorithm.  You can explore the results in the "Subreddit Clustering" and "Post Clustering" notebooks in the "Notebooks" folder.
+Clustering models (including K-Means, Agglomerative Hierarchical, DBSCAN, OPTICS, Affinity Propagation, and Spectral Clustering) are then applied on both TF-IDF vectorized documents reducing using SVD and document embeddings producing using gensim's implementation of the Doc2Vec algorithm.  You can explore the results in the "Subreddit Clustering" and "Post Clustering" notebooks in the "Notebooks" folder.  The diagram below shows the overall project organization:
+
+![Project organization](https://github.com/jonwiseman/DS300/raw/master/Images/Design.png)
 
 ## Files  
 Below is an overview of what is contained in each folder, presented in the recommended order of viewing.
