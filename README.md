@@ -50,6 +50,9 @@ This notebook explores clustering on subreddit text data as scraped and processe
 *Post Clustering*  
 This notebook explores clustering on post text data as scraped and processed earlier.
 
+*Code Demonstration*  
+Short demonstration of Project code.  Quick way to produce 1-gram visualizations and get recommendations using Agglomerative Clustering and Affinity Propagation.
+
 *Clustering Exploration*  
 This notebook contains a general overview of some clustering methods applied to the text dataset.
 
