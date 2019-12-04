@@ -17,10 +17,10 @@ def main():
     args = parser.parse_args()  # parse arguments
 
     categories = args.c  # get list of categories to scrape
-    config.read(r'C:\Users\jonat\Desktop\Data Mining\Project\configuration.conf')  # read and parse configuration file
+    config.read(r'..\configuration.conf')  # read and parse configuration file
 
     for cat in categories:  # scrape subreddits in each category
-        os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}')  # change to category's directory
+        os.chdir(fr'..\Data\{cat}')  # change to category's directory
 
         subreddits = []  # for storing list of subreddits
 
@@ -46,7 +46,7 @@ def main():
                                          'comment': top_level_comment.body})
 
             logging.info(f'{len(comments)} scraped from r/{sub_name}\n')
-            with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Raw\{sub}.json', 'w') as f:
+            with open(fr'..\Data\{cat}\Raw\{sub}.json', 'w') as f:
                 json.dump(comments, f)  # dump scraped data in .json format
 
 

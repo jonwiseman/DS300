@@ -34,7 +34,7 @@ def main():
         raise InputError
 
     for cat in categories:  # clean comments for each sub in each category
-        os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}')
+        os.chdir(fr'..\Data\{cat}')
 
         subreddits = []  # get list of subreddits
 
@@ -49,7 +49,7 @@ def main():
         for stem in stems:  # apply each type of stemming to comments
             for sub in subreddits:
                 logging.info(f'Cleaning comments for r/{sub} using {stem} stemming')
-                with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Raw\{sub}.json', 'r') as f:
+                with open(fr'..\Data\{cat}\Raw\{sub}.json', 'r') as f:
                     comments = json.load(f)
 
                 filtered_comments = []  # list of processed comments for .json dump
@@ -74,7 +74,7 @@ def main():
                     filtered_comments.append(
                         {'comment_id': comment['comment_id'], 'post_id': comment['post_id'], 'comment': final_words})
 
-                with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Processed\{stem}\{sub}.json', 'w') \
+                with open(fr'..\Data\{cat}\Processed\{stem}\{sub}.json', 'w') \
                         as f:
                     json.dump(filtered_comments, f)  # dump new .json file in appropriate folder
 

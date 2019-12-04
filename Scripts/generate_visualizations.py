@@ -49,7 +49,7 @@ def main():
             axis.axis("off")
             axis.set_title(f'r/{subs[i][3]}')  # display subreddit title
         logging.info(fr'Generated wordcloud for {cat}')
-        plt.savefig(fr'C:\Users\jonat\Desktop\Data Mining\Project\Images\word_clouds\{cat}.png')
+        plt.savefig(fr'..\Images\word_clouds\{cat}.png')
 
     logging.info('Generating vector plots...')  # Generate plots for document vectorizations
     for stem in stems:  # use each specified stemming type
@@ -74,7 +74,7 @@ def main():
 
             ax.legend()
             ax.set_title(f'TF-IDF Vectorization up to {end}-grams')
-            plt.savefig(fr'C:\Users\jonat\Desktop\Data Mining\Project\Images\idf\{stem}\{end}_gram.png')
+            plt.savefig(fr'..\Images\idf\{stem}\{end}_gram.png')
             plt.close(fig)  # close figure object to save memory
             logging.info(f'Generated tf-idf vector plot for {stem} with up to {end}-grams')
         for end in range(1, 4):  # generate plots for count vectorizer
@@ -98,7 +98,7 @@ def main():
 
             ax.legend()
             ax.set_title(f'Count Vectorization with up to {end}-grams')
-            plt.savefig(fr'C:\Users\jonat\Desktop\Data Mining\Project\Images\count\{stem}\{end}_gram.png')
+            plt.savefig(fr'..\Images\count\{stem}\{end}_gram.png')
             plt.close(fig)
             logging.info(f'Generated count vector plot for {stem} with up to {end}-grams')
 
@@ -127,10 +127,10 @@ def get_document_array(stem, categories):
     """
     documents = []
     for cat in categories:
-        os.chdir(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Processed\{stem}')
+        os.chdir(fr'..\Data\{cat}\Processed\{stem}')
         files = glob.glob('*.json')
         for file in files:
-            with open(fr'C:\Users\jonat\Desktop\Data Mining\Project\Data\{cat}\Processed\{stem}\{file}', 'r') as f:
+            with open(fr'..\Data\{cat}\Processed\{stem}\{file}', 'r') as f:
                 comments = json.load(f)
             documents.append((' '.join([comment['comment'] for comment in comments]), cat, cat, file.split('.json')[0]))
 
