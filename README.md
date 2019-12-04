@@ -60,4 +60,4 @@ This notebook contains a general overview of some clustering methods applied to 
 This folder contains the raw and processed (including lemmatized and stemmed) .json files for each subreddit (organized by category) and trained gensim document embeddings.  
 
 **Images**  
-This folder contains visualizations produced by the generate_visualizations.py script.
+This folder contains visualizations produced by the generate_visualizations.py script, as well as the overall project design and images used in the presentation.
