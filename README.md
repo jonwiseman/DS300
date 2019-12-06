@@ -1,4 +1,4 @@
-This repository contains files related to the final project for DS300: Data Mining.
+This repository contains files related to the final project for DS300: Data Mining.  All filepaths in scripts and notebooks are generalized and can be run if the repository is downloaded.
 
 ## Goal  
 This project aims to utilize clustering techniques on Reddit comment data to produce subreddit and post recommendations.
